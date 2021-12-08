@@ -16,7 +16,6 @@ public class CategoryDTO implements Serializable  {
 
 
 	public CategoryDTO(Long id, String name) {
-		super();
 		this.id = id;
 		this.name = name;
 	}
