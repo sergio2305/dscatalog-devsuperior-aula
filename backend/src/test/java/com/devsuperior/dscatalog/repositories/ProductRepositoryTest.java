@@ -62,6 +62,24 @@ public class ProductRepositoryTest {
 		});
 	}
 	
+	@Test
+	public void findByIdShouldVerifyObjectWhenIdExists() {
+		
+		repository.findById(exintingId);
+		
+		Optional<Product> result = repository.findById(exintingId);
+		Assertions.assertTrue(result.isPresent());
+	}
+	
+	@Test
+	public void findByIdShouldVerifyObjectWhenDoesNotIdExists() {
+		
+		repository.findById(nonExistingId);
+		
+		Optional<Product> result = repository.findById(nonExistingId);
+		Assertions.assertFalse(result.isPresent());
+	}
+	
 	
 	
 }
