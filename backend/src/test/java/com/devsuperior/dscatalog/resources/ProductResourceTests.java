@@ -6,6 +6,7 @@ import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -73,8 +74,30 @@ public class ProductResourceTests {
 		
 	}
 	
+	
+	
 	@Test
-	public void updateShouldReturnProductDTOWhenIdExist() throws Exception{
+	public void insertShouldReturnProductDTOWhenIdExist() throws Exception{
+		
+		String jsonBody = objectMapper.writeValueAsString(productDTO);
+		
+		ResultActions result =
+				mockMvc.perform(post("/products/{id}", existingId )
+						.content(jsonBody)
+						.contentType(MediaType.APPLICATION_JSON)
+						.accept(MediaType.APPLICATION_JSON));
+		
+		result.andExpect(status().isCreated());
+		result.andExpect(jsonPath("$.id").exists());
+		result.andExpect(jsonPath("$.name").exists());
+		result.andExpect(jsonPath("$.description").exists());
+		
+	}
+	
+	
+	
+	@Test
+	public void upsateShouldReturnProductDTOWhenIdExist() throws Exception{
 		
 		String jsonBody = objectMapper.writeValueAsString(productDTO);
 		
